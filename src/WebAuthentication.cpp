@@ -79,9 +79,9 @@ static bool getMD5(uint8_t* data, uint16_t len, char* output) { // 33 bytes or m
     return false;
   memset(_buf, 0x00, 16);
 
-  MD5Init(&_ctx);
-  MD5Update(&_ctx, data, len);
-  MD5Final(_buf, &_ctx);
+  mbedtls_md5_starts(&_ctx);
+  mbedtls_md5_update(&_ctx, data, len);
+  mbedtls_md5_finish(&_ctx, _buf);
 
   for (uint8_t i = 0; i < 16; i++) {
     sprintf_P(output + (i * 2), PSTR("%02x"), _buf[i]);
